@@ -21,7 +21,8 @@ public class selectRecord {
 	@RequestMapping("/record.do")
 	public JsonBean record(int page,HttpSession session) {
 
-		//System.out.println("3");
+		System.out.println("4");
+		
 		Map<String, Object> map = recordService.findUserByPage(session, page);
 		try {
 			return new JsonBean(1,map);

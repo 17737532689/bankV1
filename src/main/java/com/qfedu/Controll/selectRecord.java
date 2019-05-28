@@ -20,7 +20,8 @@ public class selectRecord {
 	private RecordService recordService;
 	@RequestMapping("/record.do")
 	public JsonBean record(int page,HttpSession session) {
-		
+
+		System.out.println("2");
 		Map<String, Object> map = recordService.findUserByPage(session, page);
 		try {
 			return new JsonBean(1,map);

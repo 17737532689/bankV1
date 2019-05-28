@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配置主配置文件的dtd约束 -->
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+
+	
+	<settings>
+	<!-- 使用spring后，如果需要输出mybatis的日志，需要如下的配置 -->
+		<setting name="logImpl" value="log4j"/>
+	
+	
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	
+<!-- 设置自定义类的别名 -->
+	<typeAliases>
+	<!-- type 表示类名，包名+类名
+		alias 别名
+	 -->
+		<!-- <typeAlias type="com.qfedu.dynamic.Employee" alias="employee"/> -->
+		<typeAlias type="com.qfedu.entity.User" alias="user"/>
+		<typeAlias type="com.qfedu.entity.Record" alias="record"/>
+		
+	</typeAliases>
+	
+	<plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        <!-- config params as the following -->
+        <property name="helperDialect" value="mysql"/>
+	</plugin>
+
+		
+
+</plugins>
+
+</configuration>

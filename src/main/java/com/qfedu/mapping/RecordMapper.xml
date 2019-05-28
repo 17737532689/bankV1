@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.RecordMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.entity.Record">
+    <id column="rId" jdbcType="INTEGER" property="rid" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="outMoney" jdbcType="INTEGER" property="outmoney" />
+    <result column="inMoney" jdbcType="INTEGER" property="inmoney" />
+    <result column="remainMoney" jdbcType="INTEGER" property="remainmoney" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qfedu.entity.Record">
+    <result column="explain" jdbcType="LONGVARCHAR" property="explain" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rId, time, outMoney, inMoney, remainMoney, type, userId
+  </sql>
+  <sql id="Blob_Column_List">
+    explain
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from b_record
+    where rId = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from b_record
+    where rId = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.entity.Record">
+    insert into b_record (rId, time, outMoney, 
+      inMoney, remainMoney, type, 
+      userId, explain)
+    values (#{rid,jdbcType=INTEGER}, #{time,jdbcType=DATE}, #{outmoney,jdbcType=INTEGER}, 
+      #{inmoney,jdbcType=INTEGER}, #{remainmoney,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=VARCHAR}, #{explain,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.entity.Record">
+    insert into b_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rId,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="outmoney != null">
+        outMoney,
+      </if>
+      <if test="inmoney != null">
+        inMoney,
+      </if>
+      <if test="remainmoney != null">
+        remainMoney,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="explain != null">
+        explain,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outmoney != null">
+        #{outmoney,jdbcType=INTEGER},
+      </if>
+      <if test="inmoney != null">
+        #{inmoney,jdbcType=INTEGER},
+      </if>
+      <if test="remainmoney != null">
+        #{remainmoney,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null">
+        #{explain,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.entity.Record">
+    update b_record
+    <set>
+      <if test="time != null">
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="outmoney != null">
+        outMoney = #{outmoney,jdbcType=INTEGER},
+      </if>
+      <if test="inmoney != null">
+        inMoney = #{inmoney,jdbcType=INTEGER},
+      </if>
+      <if test="remainmoney != null">
+        remainMoney = #{remainmoney,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null">
+        explain = #{explain,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where rId = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qfedu.entity.Record">
+    update b_record
+    set time = #{time,jdbcType=DATE},
+      outMoney = #{outmoney,jdbcType=INTEGER},
+      inMoney = #{inmoney,jdbcType=INTEGER},
+      remainMoney = #{remainmoney,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      explain = #{explain,jdbcType=LONGVARCHAR}
+    where rId = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.entity.Record">
+    update b_record
+    set time = #{time,jdbcType=DATE},
+      outMoney = #{outmoney,jdbcType=INTEGER},
+      inMoney = #{inmoney,jdbcType=INTEGER},
+      remainMoney = #{remainmoney,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR}
+    where rId = #{rid,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+   <select id="selectByUserId" parameterType="string" resultType="record">
+  
+  select * from b_record where userId =#{userId}
+  
+  </select>
+  
+   <select id="selectMoreUserId" parameterType="string" resultType="record">
+  
+  select * from b_record where userId =#{userId}
+  
+  </select>
+   <select id="selectByVUserId" parameterType="string" resultType="record">
+  
+  </select>
+ 
+  
+</mapper>

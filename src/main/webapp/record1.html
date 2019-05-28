@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- <fmt:formatDate value="${activity.startTime}" pattern="yyyy-MM-dd" />  -->
+
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="pagination/jquery.pagination.js"> </script>
+<script type="text/javascript" src="js/vue.min.js"> </script>
+
+<style type="text/css">
+			table td {
+				text-align: center;
+			}
+			/*合并表格的边框*/
+			
+			table {
+				width: 700px;
+				border-collapse: collapse;
+			}
+			
+			h3 {
+				text-align: center;
+			}
+			
+			div {
+				margin: 0 auto;
+				width: 700px;
+			}
+		</style>
+
+</head>
+<body>
+
+
+		<div  id="app">
+			<h3>交易记录</h3>
+			<table border="1">
+			 <thead>
+   				<tr>
+					<th>交易日期</th>
+					<th>支出</th>
+					 <th>支入</th> 
+					<th>账户余额</th>
+					<th>交易类型</th>
+					<th>备注</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr v-for="re in records">
+					<td>{{re.time}}</td>
+				    <td>{{re.outmoney}}</td>
+					<td>{{re.inmoney}}</td>
+					<td>{{re.remainmoney}}</td>
+					<td>{{re.type}}</td>
+					<td>{{re.explain}}</td>
+				</tr>
+				</tbody>
+		</table>
+		</div>
+				
+<script type="text/javascript">
+		var vue= new Vue({
+			el:"#app",
+			data:{
+				// 用户列表
+				records:[]
+			},
+			methods:{
+				loadData(page){
+					var _this = this;
+					$.ajax({
+						type:"get",
+						url:"record.do?page="+page,
+						dataType:"json",
+						success:function(data){
+							if(data.code == 1){
+								$("tbody").empty();
+								// 修改vue对象中userList的值
+								_this.records = data.info;
+								
+								var total = data.info.total;
+								// ceil向上取整
+								var totalPage = Math.ceil(total / 5);
+								var pno = $('.now').text();
+								//分页设置
+			                    $('.M-box').pagination({  
+			                        pageCount: totalPage,  // 总页数
+			                        current:pno,//当前第几页  
+			                        jump: true,  // 是否显示跳转相关元素
+			                        jumpBtn: 'go', // 跳转按钮显示文字
+			                        coping: true,    //是否显示首页末页
+			                        homePage: '首页',  
+			                        endPage: '末页',  
+			                        prevContent: '<<',  // 上一页功能 显示文字信息
+			                        nextContent: '>>',  
+			                        callback:function(index){  // 点击不同的页码按钮，或者其他跳转的按钮，会调用该方法
+			                        	// index.getCurrent() 获取当前要使用的页码
+			                            $('.now').text(index.getCurrent());   
+			                            loadData(index.getCurrent());
+			                       } 
+			                    });		
+								
+							}
+						}
+					})
+				}
+				
+			},
+			created(){ // 生命周期相关的函数，放在methods外面；created表示vue对象创建完成
+				this.loadData(1)
+			}
+	
+	
+})
+
+
+</script>
+</body>
+</html>
